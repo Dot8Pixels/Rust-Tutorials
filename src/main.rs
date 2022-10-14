@@ -1,30 +1,75 @@
+fn number() -> i32 {
+    8
+}
+
+fn multiply(number_one: i32, number_two: i32) -> i32 { // Two i32s will enter the function. We will call them number_one and number_two.
+    let result = number_one * number_two;
+    println!("{} times {} is {}", number_one, number_two, result);
+    result
+}
+
 fn main() {
 
-    // Type Inference
-    let small_number: u8 = 10;
-    let small_number = 10u8; // 10u8 = 10 of type u8
-    let small_number = 10_u8; // This is easier to read
-    let big_number = 100_000_000_i32; // 100 million is easy to read with _
-    let number = 0________u8;
-    let number2 = 1___6______2____4______i32;
-    println!("{}, {}", number, number2);
+    // Printing "Hello World"
+    println!("Hello, world!");
+    println!("Hello, world number {}!", 8);
+    println!("Hello, worlds number {} and {}!", 8, 9);
+
+    println!("Hello, world number {}!", number());
+
+    multiply(8, 9); // We can give the numbers directly
+    let some_number = 10; // Or we can declare two variables
+    let some_other_number = 2;
+    multiply(some_number, some_other_number); // and put them in the function
+
+    let multiply_result = multiply(8, 9); // We used multiply() to print and to give the result to multiply_result
+    println!("{}",multiply_result);
+
+    let my_number = 8;
+    println!("Hello, number {}", my_number);
+
+    let my_number = {
+        let second_number = 8;
+            second_number + 9 // No semicolon, so the code block returns 8 + 9.
+                              // It works just like a function
+        };
     
-    let my_float = 5.; // Rust sees . and knows that it is a float
+        println!("My number is: {}", my_number);
 
-    let my_float: f64 = 5.0;
-    let my_other_float: f32 = 8.5;
+    let my_number = {
+        let second_number = 8; // declare second_number,
+            second_number + 9; // add 9 to second_number
+                                   // but we didn't return it!
+                                   // second_number dies now
+        };
+        
+    println!("My number is: {:?}", my_number); // my_number is ()
 
-    let third_float = my_float + my_other_float as f64; // my_other_float as f64 = use my_other_float like an f64
+    // Type Inference
+    // let small_number: u8 = 10;
+    // let small_number = 10u8; // 10u8 = 10 of type u8
+    // let small_number = 10_u8; // This is easier to read
+    // let big_number = 100_000_000_i32; // 100 million is easy to read with _
+    // let number = 0________u8;
+    // let number2 = 1___6______2____4______i32;
+    // println!("{}, {}", number, number2);
+    
+    // let my_float = 5.; // Rust sees . and knows that it is a float
 
-    let my_float = 5.0; // Rust will choose f64
-    let my_other_float = 8.5; // Here again it will choose f64
+    // let my_float: f64 = 5.0;
+    // let my_other_float: f32 = 8.5;
 
-    let third_float = my_float + my_other_float;
+    // let third_float = my_float + my_other_float as f64; // my_other_float as f64 = use my_other_float like an f64
 
-    let my_float: f32 = 5.0;
-    let my_other_float = 8.5; // Usually Rust would choose f64,
+    // let my_float = 5.0; // Rust will choose f64
+    // let my_other_float = 8.5; // Here again it will choose f64
 
-    let third_float = my_float + my_other_float; // but now it knows that you need to add it to an f32. So it chooses f32 for my_other_float too
+    // let third_float = my_float + my_other_float;
+
+    // let my_float: f32 = 5.0;
+    // let my_other_float = 8.5; // Usually Rust would choose f64,
+
+    // let third_float = my_float + my_other_float; // but now it knows that you need to add it to an f32. So it chooses f32 for my_other_float too
 
     // Types
     // let first_letter = 'A';
