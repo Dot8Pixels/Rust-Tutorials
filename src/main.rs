@@ -12,83 +12,133 @@
 //     number * 2
 // }
 
+use std::any::type_name;
+
+fn type_of<T>(_: T) -> &'static str {
+    type_name::<T>()
+}
+
 fn main() {
 
-    // More about printing
-    // Note: this is print!, not println!
-    print!("\t Start with a tab\nand move to a new line");
+    // Strings
+    let name = "서태지"; // This is a Korean name. No problem, because a &str is UTF-8.
+    let other_name = String::from("Adrian Fahrenheit Țepeș"); // Ț and ș are no problem in UTF-8. 
 
-    // Note: After the first line you have to start on the far left.
-    // If you write directly under println!, it will add the spaces
-    println!("Inside quotes
-you can write over
-many lines
-and it will print just fine.");
+    let name = "😂";
+    println!("My name is actually {}", name);
 
-    println!("If you forget to write
-    on the left side, the spaces
-    will be added when you print.");
+    println!("A String is always {:?} bytes. It is Sized.", std::mem::size_of::<String>()); // std::mem::size_of::<Type>() gives you the size in bytes of a type
+    println!("And an i8 is always {:?} bytes. It is Sized.", std::mem::size_of::<i8>());
+    println!("And an f64 is always {:?} bytes. It is Sized.", std::mem::size_of::<f64>());
+    println!("But a &str? It can be anything. '서태지' is {:?} bytes. It is not Sized.", std::mem::size_of_val("서태지")); // std::mem::size_of_val() gives you the size in bytes of a variable
+    println!("And 'Adrian Fahrenheit Țepeș' is {:?} bytes. It is not Sized.", std::mem::size_of_val("Adrian Fahrenheit Țepeș"));
 
-    println!("Here are two escape characters: \\n and \\t");
+    let my_name = "Billybrobby";
+    let my_country = "USA";
+    let my_home = "Korea";
 
-    println!("He said, \"You can find the file at c:\\files\\my_documents\\file.txt.\" Then I found the file."); // We used \ five times here
-    println!(r#"He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file."#);
-
-    let my_string = "'Ice to see you,' he said."; // single quotes
-    let quote_string = r#""Ice to see you," he said."#; // double quotes
-    let hashtag_string = r##"The hashtag #IceToSeeYou had become very popular."##; // Has one # so we need at least ##
-    let many_hashtags = r####""You don't have to type ### to use a hashtag. You can just use #.""####; // Has three ### so we need at least ####
-
-    println!("{}\n{}\n{}\n{}\n", my_string, quote_string, hashtag_string, many_hashtags);
-
-    let r#let = 6; // The variable's name is let
-    let mut r#mut = 10; // This variable's name is mut
-
-    println!("let = {}, mut = {}", r#let, r#mut);
-
-    println!("{:?}", b"This will look like numbers");
-
-    println!("{:?}", br##"I like to write "#"."##);
-
-    println!("{:X}", '행' as u32); // Cast char as u32 to get the hexadecimal value
-    println!("{:X}", 'H' as u32);
-    println!("{:X}", '居' as u32);
-    println!("{:X}", 'い' as u32);
-
-    println!("\u{D589}, \u{48}, \u{5C45}, \u{3044}"); // Try printing them with unicode escape \u
-
-    let number = 9;
-    let number_ref = &number;
-    println!("{:p}", number_ref);
-
-    let number = 555;
-    println!("Binary: {:b}, hexadecimal: {:x}, octal: {:o}", number, number, number);
-
-    let father_name = "Vlad";
-    let son_name = "Adrian Fahrenheit";
-    let family_name = "Țepeș";
-    println!("This is {1} {2}, son of {0} {2}.", father_name, son_name, family_name);
-
-    println!(
-        "{city1} is in {country} and {city2} is also in {country},
-but {city3} is not in {country}.",
-        city1 = "Seoul",
-        city2 = "Busan",
-        city3 = "Tokyo",
-        country = "Korea"
+    let together = format!(
+        "I am {} and I come from {} but I live in {}.",
+        my_name, my_country, my_home
     );
+    println!("{}", together);
 
-    let letter = "a";
-    println!("{:ㅎ^11}", letter);
+    let my_string: String = "Try to make this a String".into();
+    println!("{}", type_of(&my_string));
+    println!("{:#?}", my_string);
 
-    let title = "TODAY'S NEWS";
-    println!("{:-^30}", title); // no variable name, pad with -, put in centre, 30 characters long
-    let bar = "|";
-    println!("{: <15}{: >15}", bar, bar); // no variable name, pad with space, 15 characters each, one to the left, one to the right
-    let a = "SEOUL";
-    let b = "TOKYO";
-    println!("{city1:-<15}{city2:->15}", city1 = a, city2 = b); // variable names city1 and city2, pad with -, one to the left, one to the right
-    println!("{:-<15}{:->15}", a, b);
+    let my_str = "hello";
+
+    // three conversions below all depends on the fact: String implements From<&str>:
+    let string1 = String::from(my_str);
+    let string2 = my_str.to_string();
+    // Explicit type annotation is required here
+    let string3: String = my_str.into();
+    
+    println!("{}", type_of(&string1));
+    println!("{:#?}", string1);
+    println!("{}", type_of(&string2));
+    println!("{:#?}", string2);
+    println!("{}", type_of(&string3));
+    println!("{:#?}", string3);
+
+
+
+//     // More about printing
+//     // Note: this is print!, not println!
+//     print!("\t Start with a tab\nand move to a new line");
+
+//     // Note: After the first line you have to start on the far left.
+//     // If you write directly under println!, it will add the spaces
+//     println!("Inside quotes
+// you can write over
+// many lines
+// and it will print just fine.");
+
+//     println!("If you forget to write
+//     on the left side, the spaces
+//     will be added when you print.");
+
+//     println!("Here are two escape characters: \\n and \\t");
+
+//     println!("He said, \"You can find the file at c:\\files\\my_documents\\file.txt.\" Then I found the file."); // We used \ five times here
+//     println!(r#"He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file."#);
+
+//     let my_string = "'Ice to see you,' he said."; // single quotes
+//     let quote_string = r#""Ice to see you," he said."#; // double quotes
+//     let hashtag_string = r##"The hashtag #IceToSeeYou had become very popular."##; // Has one # so we need at least ##
+//     let many_hashtags = r####""You don't have to type ### to use a hashtag. You can just use #.""####; // Has three ### so we need at least ####
+
+//     println!("{}\n{}\n{}\n{}\n", my_string, quote_string, hashtag_string, many_hashtags);
+
+//     let r#let = 6; // The variable's name is let
+//     let mut r#mut = 10; // This variable's name is mut
+
+//     println!("let = {}, mut = {}", r#let, r#mut);
+
+//     println!("{:?}", b"This will look like numbers");
+
+//     println!("{:?}", br##"I like to write "#"."##);
+
+//     println!("{:X}", '행' as u32); // Cast char as u32 to get the hexadecimal value
+//     println!("{:X}", 'H' as u32);
+//     println!("{:X}", '居' as u32);
+//     println!("{:X}", 'い' as u32);
+
+//     println!("\u{D589}, \u{48}, \u{5C45}, \u{3044}"); // Try printing them with unicode escape \u
+
+//     let number = 9;
+//     let number_ref = &number;
+//     println!("{:p}", number_ref);
+
+//     let number = 555;
+//     println!("Binary: {:b}, hexadecimal: {:x}, octal: {:o}", number, number, number);
+
+//     let father_name = "Vlad";
+//     let son_name = "Adrian Fahrenheit";
+//     let family_name = "Țepeș";
+//     println!("This is {1} {2}, son of {0} {2}.", father_name, son_name, family_name);
+
+//     println!(
+//         "{city1} is in {country} and {city2} is also in {country},
+// but {city3} is not in {country}.",
+//         city1 = "Seoul",
+//         city2 = "Busan",
+//         city3 = "Tokyo",
+//         country = "Korea"
+//     );
+
+//     let letter = "a";
+//     println!("{:ㅎ^11}", letter);
+
+//     let title = "TODAY'S NEWS";
+//     println!("{:-^30}", title); // no variable name, pad with -, put in centre, 30 characters long
+//     let bar = "|";
+//     println!("{: <15}{: >15}", bar, bar); // no variable name, pad with space, 15 characters each, one to the left, one to the right
+//     let a = "SEOUL";
+//     let b = "TOKYO";
+//     println!("{city1:-<15}{city2:->15}", city1 = a, city2 = b); // variable names city1 and city2, pad with -, one to the left, one to the right
+//     println!("{:-<15}{:->15}", a, b);
 
     // Stack, Heap and Pointer
     // let my_number = 15; // This is an i32
