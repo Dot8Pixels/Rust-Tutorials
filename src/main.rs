@@ -12,56 +12,70 @@
 //     number * 2
 // }
 
-use std::any::type_name;
+// use std::any::type_name;
 
-fn type_of<T>(_: T) -> &'static str {
-    type_name::<T>()
+// fn type_of<T>(_: T) -> &'static str {
+//     type_name::<T>()
+// }
+
+fn return_str() -> &str {
+    let country = String::from("Austria");
+    let country_ref = &country;
+    country_ref // ⚠️ Error because variable only live in function.
 }
 
 fn main() {
 
+    // More on References
+    let country = String::from("Austria");
+    let ref_one = &country;
+    let ref_two = &country;
+
+    println!("{}", ref_one);
+
+    let country = return_str();
+
     // Strings
-    let name = "서태지"; // This is a Korean name. No problem, because a &str is UTF-8.
-    let other_name = String::from("Adrian Fahrenheit Țepeș"); // Ț and ș are no problem in UTF-8. 
+    // let name = "서태지"; // This is a Korean name. No problem, because a &str is UTF-8.
+    // let other_name = String::from("Adrian Fahrenheit Țepeș"); // Ț and ș are no problem in UTF-8. 
 
-    let name = "😂";
-    println!("My name is actually {}", name);
+    // let name = "😂";
+    // println!("My name is actually {}", name);
 
-    println!("A String is always {:?} bytes. It is Sized.", std::mem::size_of::<String>()); // std::mem::size_of::<Type>() gives you the size in bytes of a type
-    println!("And an i8 is always {:?} bytes. It is Sized.", std::mem::size_of::<i8>());
-    println!("And an f64 is always {:?} bytes. It is Sized.", std::mem::size_of::<f64>());
-    println!("But a &str? It can be anything. '서태지' is {:?} bytes. It is not Sized.", std::mem::size_of_val("서태지")); // std::mem::size_of_val() gives you the size in bytes of a variable
-    println!("And 'Adrian Fahrenheit Țepeș' is {:?} bytes. It is not Sized.", std::mem::size_of_val("Adrian Fahrenheit Țepeș"));
+    // println!("A String is always {:?} bytes. It is Sized.", std::mem::size_of::<String>()); // std::mem::size_of::<Type>() gives you the size in bytes of a type
+    // println!("And an i8 is always {:?} bytes. It is Sized.", std::mem::size_of::<i8>());
+    // println!("And an f64 is always {:?} bytes. It is Sized.", std::mem::size_of::<f64>());
+    // println!("But a &str? It can be anything. '서태지' is {:?} bytes. It is not Sized.", std::mem::size_of_val("서태지")); // std::mem::size_of_val() gives you the size in bytes of a variable
+    // println!("And 'Adrian Fahrenheit Țepeș' is {:?} bytes. It is not Sized.", std::mem::size_of_val("Adrian Fahrenheit Țepeș"));
 
-    let my_name = "Billybrobby";
-    let my_country = "USA";
-    let my_home = "Korea";
+    // let my_name = "Billybrobby";
+    // let my_country = "USA";
+    // let my_home = "Korea";
 
-    let together = format!(
-        "I am {} and I come from {} but I live in {}.",
-        my_name, my_country, my_home
-    );
-    println!("{}", together);
+    // let together = format!(
+    //     "I am {} and I come from {} but I live in {}.",
+    //     my_name, my_country, my_home
+    // );
+    // println!("{}", together);
 
-    let my_string: String = "Try to make this a String".into();
-    println!("{}", type_of(&my_string));
-    println!("{:#?}", my_string);
+    // let my_string: String = "Try to make this a String".into();
+    // println!("{}", type_of(&my_string));
+    // println!("{:#?}", my_string);
 
-    let my_str = "hello";
+    // let my_str = "hello";
 
-    // three conversions below all depends on the fact: String implements From<&str>:
-    let string1 = String::from(my_str);
-    let string2 = my_str.to_string();
-    // Explicit type annotation is required here
-    let string3: String = my_str.into();
+    // // three conversions below all depends on the fact: String implements From<&str>:
+    // let string1 = String::from(my_str);
+    // let string2 = my_str.to_string();
+    // // Explicit type annotation is required here
+    // let string3: String = my_str.into();
     
-    println!("{}", type_of(&string1));
-    println!("{:#?}", string1);
-    println!("{}", type_of(&string2));
-    println!("{:#?}", string2);
-    println!("{}", type_of(&string3));
-    println!("{:#?}", string3);
-
+    // println!("{}", type_of(&string1));
+    // println!("{:#?}", string1);
+    // println!("{}", type_of(&string2));
+    // println!("{:#?}", string2);
+    // println!("{}", type_of(&string3));
+    // println!("{:#?}", string3);
 
 
 //     // More about printing
