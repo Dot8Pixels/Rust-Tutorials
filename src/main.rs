@@ -27,36 +27,118 @@
 // fn print_country(country_name: String) {
 //     println!("{}", country_name);
 // }
-fn print_country(country_name: String) -> String {
+// fn print_country(country_name: String) -> String {
+//     println!("{}", country_name);
+//     country_name // return it here
+// }
+
+// fn add_hungary(country_name: &mut String) { // first we say that the function takes a mutable reference
+//     country_name.push_str("-Hungary"); // push_str() adds a &str to a String
+//     println!("Now it says: {}", country_name);
+// }
+
+// fn adds_hungary2(mut country: String) { // Here's how: adds_hungary takes the String and declares it mutable!
+//     country.push_str("-Hungary");
+//     println!("{}", country);
+// }
+
+fn prints_number(number: i32) { // There is no -> so it's not returning anything
+                                // If number was not copy type, it would take it
+                                // and we couldn't use it again
+    println!("{}", number);
+}
+
+fn prints_country_string(country_name: String) {
     println!("{}", country_name);
-    country_name // return it here
 }
 
-fn add_hungary(country_name: &mut String) { // first we say that the function takes a mutable reference
-    country_name.push_str("-Hungary"); // push_str() adds a &str to a String
-    println!("Now it says: {}", country_name);
+fn get_length(input: String) { // Takes ownership of a String
+    println!("It's {} words long.", input.split_whitespace().count()); // splits to count the number of words
 }
 
-fn adds_hungary2(mut country: String) { // Here's how: adds_hungary takes the String and declares it mutable!
-    country.push_str("-Hungary");
-    println!("{}", country);
+fn get_length_ref(input: &String) {
+    println!("It's {} words long.", input.split_whitespace().count());
 }
+
+fn loop_then_return(mut counter: i32) -> i32 {
+    loop {
+        counter += 1;
+        if counter % 50 == 0 {
+            break;
+        }
+    }
+    counter
+}
+
 
 fn main() {
 
-    // Giving references to functions
-    let country = String::from("Austria");
-    // print_country(country); // We print "Austria"
-    // print_country(country); // ⚠️ That was fun, let's do it again!
+    // Copy Types
+    let my_number = 8;
+    prints_number(my_number); // Prints 8. prints_number gets a copy of my_number
+    prints_number(my_number); // Prints 8 again.
+                              // No problem, because my_number is copy type!
+
+    // let country = String::from("Kiribati");
+    // prints_country_String(country);
+    // prints_country_String(country); // ⚠️
+
+    let country = String::from("Kiribati");
+    prints_country_string(country.clone());
+    prints_country_string(country);
+
+    let mut my_string = String::new();
+    for _ in 0..20 {
+        // my_string.push_str("Here are some more words "); // push the words on
+        println!("{}", my_string);
+        my_string.push_str("A B ");
+        get_length(my_string.clone()); // gives it a clone every time
+    }
+
+    let mut my_string = String::new();
+    for _ in 0..20 {
+        // my_string.push_str("Here are some more words ");
+        println!("{}", my_string);
+        my_string.push_str("A B ");
+        get_length_ref(&my_string);
+    }
+
+    // Variables Without Values
+    // let my_variable; // ⚠️
+
+    let my_number;
+    {
+        // Pretend we need to have this code block
+        let number = {
+            // Pretend there is code here to make a number
+            // Lots of code, and finally:
+            101
+        };
+        my_number = loop_then_return(number);
+    }
+
+    println!("{}", my_number);
+
+    let my_number;
+    {
+        my_number = 100;
+    }
+
+    println!("{}", my_number);
+
+    // // Giving references to functions
+    // let country = String::from("Austria");
+    // // print_country(country); // We print "Austria"
+    // // print_country(country); // ⚠️ That was fun, let's do it again!
     
-    let country = print_country(country);
-    print_country(country);
+    // let country = print_country(country);
+    // print_country(country);
 
-    let mut country = String::from("Austria");
-    add_hungary(&mut country); // we also need to give it a mutable reference.
+    // let mut country = String::from("Austria");
+    // add_hungary(&mut country); // we also need to give it a mutable reference.
 
-    let country2 = String::from("Austria"); // country is not mutable, but we are going to print Austria-Hungary. How?
-    adds_hungary2(country2);
+    // let country2 = String::from("Austria"); // country is not mutable, but we are going to print Austria-Hungary. How?
+    // adds_hungary2(country2);
 
     // // Mutable References
     // let mut my_number = 8;
