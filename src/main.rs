@@ -24,19 +24,51 @@
 //     country_ref // ⚠️ Error because variable only live in function.
 // }
 
+// fn print_country(country_name: String) {
+//     println!("{}", country_name);
+// }
+fn print_country(country_name: String) -> String {
+    println!("{}", country_name);
+    country_name // return it here
+}
+
+fn add_hungary(country_name: &mut String) { // first we say that the function takes a mutable reference
+    country_name.push_str("-Hungary"); // push_str() adds a &str to a String
+    println!("Now it says: {}", country_name);
+}
+
+fn adds_hungary2(mut country: String) { // Here's how: adds_hungary takes the String and declares it mutable!
+    country.push_str("-Hungary");
+    println!("{}", country);
+}
+
 fn main() {
 
-    // Mutable References
-    let mut my_number = 8;
-    let num_ref = &mut my_number;
-    *num_ref += 10; // Use * to change the i32 value.
-    println!("{}", my_number);
+    // Giving references to functions
+    let country = String::from("Austria");
+    // print_country(country); // We print "Austria"
+    // print_country(country); // ⚠️ That was fun, let's do it again!
+    
+    let country = print_country(country);
+    print_country(country);
 
-    let second_number = 800;
-    let triple_reference = &&&second_number;
-    println!("second_number is {}", second_number);
-    print!("triple_reference is {}", triple_reference);
-    println!("Second_number = triple_reference? {}", second_number == ***triple_reference);
+    let mut country = String::from("Austria");
+    add_hungary(&mut country); // we also need to give it a mutable reference.
+
+    let country2 = String::from("Austria"); // country is not mutable, but we are going to print Austria-Hungary. How?
+    adds_hungary2(country2);
+
+    // // Mutable References
+    // let mut my_number = 8;
+    // let num_ref = &mut my_number;
+    // *num_ref += 10; // Use * to change the i32 value.
+    // println!("{}", my_number);
+
+    // let second_number = 800;
+    // let triple_reference = &&&second_number;
+    // println!("second_number is {}", second_number);
+    // print!("triple_reference is {}", triple_reference);
+    // println!("Second_number = triple_reference? {}", second_number == ***triple_reference);
 
     // let mut number = 10;
     // let number_ref = &number;
@@ -44,16 +76,16 @@ fn main() {
     // *number_change += 10;
     // println!("{}", number_ref); // ⚠️ case - cannot run
 
-    let mut number = 10;
-    let number_change = &mut number; // create a mutable reference
-    *number_change += 10; // use mutable reference to add 10
-    let number_ref = &number; // create an immutable reference
-    println!("{}", number_ref); // print the immutable reference
+    // let mut number = 10;
+    // let number_change = &mut number; // create a mutable reference
+    // *number_change += 10; // use mutable reference to add 10
+    // let number_ref = &number; // create an immutable reference
+    // println!("{}", number_ref); // print the immutable reference
 
-    let country = String::from("Austria"); // Now we have a String called country
-    let country_ref = &country; // country_ref is a reference to this data. It's not going to change
-    let country = 8; // Now we have a variable called country that is an i8. But it has no relation to the other one, or to country_ref
-    println!("{}, {}", country_ref, country); // country_ref still refers to the data of String::from("Austria") that we gave it.
+    // let country = String::from("Austria"); // Now we have a String called country
+    // let country_ref = &country; // country_ref is a reference to this data. It's not going to change
+    // let country = 8; // Now we have a variable called country that is an i8. But it has no relation to the other one, or to country_ref
+    // println!("{}, {}", country_ref, country); // country_ref still refers to the data of String::from("Austria") that we gave it.
 
     // // More on References
     // let country = String::from("Austria");
